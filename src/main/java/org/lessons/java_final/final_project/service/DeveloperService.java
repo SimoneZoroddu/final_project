@@ -1,0 +1,42 @@
+package org.lessons.java_final.final_project.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.lessons.java_final.final_project.model.Developer;
+import org.lessons.java_final.final_project.repository.DeveloperRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class DeveloperService {
+
+    @Autowired
+    private DeveloperRepository developerRepository;
+
+    public List<Developer> findAll() {
+        return developerRepository.findAll();
+    }
+
+    public Developer getById(Integer id) {
+        Optional<Developer> singleDeveloper = developerRepository.findById(id);
+
+        if (singleDeveloper.isEmpty()) {
+            throw new RuntimeException("Sviluppatore non trovato con id: " + id);
+        }
+
+        return singleDeveloper.get();
+    }
+
+    public Developer create(Developer developer) {
+        return developerRepository.save(developer);
+    }
+
+    public Developer update(Developer developer) {
+        return developerRepository.save(developer);
+    }
+
+    public void delete(Developer developer) {
+        developerRepository.delete(developer);
+    }
+}
