@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <th:block th:insert="~{fragments/links :: links}"></th:block>
+
+    <title>Piattaforme</title>
+</head>
+
+
+<body class="d-flex flex-column min-vh-100">
+
+    <th:block th:insert="~{fragments/navbar :: navbar}"></th:block>
+
+
+    <main class="container mt-4 flex-grow-1">
+
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+
+            <h1>Lista Piattaforme</h1>
+
+            <a class="btn btn-primary" th:href="@{/platforms/create}">
+                Nuova Piattaforma
+            </a>
+
+        </div>
+
+
+
+        <table class="table table-striped table-bordered">
+
+
+            <thead class="table-dark">
+
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Azioni</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+                <tr th:each="platform : ${platforms}">
+
+
+                    <td th:text="${platform.id}"></td>
+
+
+                    <td th:text="${platform.name}"></td>
+
+
+                    <td>
+
+
+                        <a class="btn btn-warning btn-sm" th:href="@{/platforms/edit/{id}(id=${platform.id})}">
+                            Modifica
+                        </a>
+
+
+
+                        <form th:action="@{/platforms/delete/{id}(id=${platform.id})}" method="post"
+                            style="display:inline">
+
+
+                            <button class="btn btn-danger btn-sm" onclick="return confirm('Eliminare piattaforma?')">
+
+                                Elimina
+
+                            </button>
+
+
+                        </form>
+
+
+                    </td>
+
+
+                </tr>
+
+
+            </tbody>
+
+
+        </table>
+
+
+    </main>
+
+
+    <th:block th:insert="~{fragments/footer :: footer}"></th:block>
+
+
+</body>
+
+</html>

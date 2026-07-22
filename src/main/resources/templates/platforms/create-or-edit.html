@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <th:block th:insert="~{fragments/links :: links}"></th:block>
+    <title th:text="${edit} ? 'Modifica piattaforma' : 'Nuova piattaforma'"></title>
+</head>
+
+
+<body class="d-flex flex-column min-vh-100">
+
+    <th:block th:insert="~{fragments/navbar :: navbar}"></th:block>
+
+
+    <main class="container mt-4 flex-grow-1">
+
+
+        <h1 th:text="${edit} ? 'Modifica piattaforma' : 'Nuova piattaforma'"></h1>
+
+
+
+        <form th:object="${platform}" th:action="${edit} ? @{/platforms/edit/{id}(id=${platform.id})} : @{/platforms/create}"
+            method="post">
+
+
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Nome genere
+                </label>
+
+
+                <input type="text" class="form-control" th:field="*{name}"
+                    th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'">
+
+
+                <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('name')}">
+
+                    <ul>
+                        <li th:each="error : ${#fields.errors('name')}" th:text="${error}">
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+
+            <button class="btn btn-primary" type="submit" th:text="${edit} ? 'Salva modifiche' : 'Crea genere'">
+            </button>
+
+
+            <a class="btn btn-secondary" th:href="@{/platforms}">
+                Annulla
+            </a>
+
+
+        </form>
+
+
+    </main>
+
+
+    <th:block th:insert="~{fragments/footer :: footer}"></th:block>
+
+
+</body>
+
+</html>

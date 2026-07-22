@@ -28,6 +28,10 @@ public class DeveloperService {
         return singleDeveloper.get();
     }
 
+    public Optional<Developer> findByNameIgnoreCase(String name) {
+        return developerRepository.findByNameIgnoreCase(name);
+    }
+
     public Developer create(Developer developer) {
         return developerRepository.save(developer);
     }

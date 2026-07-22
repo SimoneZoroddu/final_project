@@ -10,12 +10,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "games")
@@ -28,6 +29,7 @@ public class Game {
     @NotBlank(message = "Titolo Obbligatorio")
     private String title;
 
+    @Lob
     private String description;
 
     private LocalDate releaseDate;
@@ -43,10 +45,23 @@ public class Game {
     @JoinTable(name = "game_platform", joinColumns = @JoinColumn(name = "game_id"), inverseJoinColumns = @JoinColumn(name = "platform_id"))
     private List<Platform> platforms;
 
-    @NotNull(message = "Sviluppatore Obbligatorio")
     @ManyToOne
     @JoinColumn(name = "developer_id")
     private Developer developer;
+
+    @Transient
+    @NotBlank(message = "Sviluppatore Obbligatorio")
+    private String developerName;
+
+
+    public String getDeveloperName() {
+        return this.developerName;
+    }
+
+    public void setDeveloperName(String developerName) {
+        this.developerName = developerName;
+    }
+
 
     public Integer getId() {
         return this.id;

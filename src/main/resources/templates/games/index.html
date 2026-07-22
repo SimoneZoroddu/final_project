@@ -1,20 +1,99 @@
 <!DOCTYPE html>
 <html lang="it" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <th:block th:insert="~{fragments/links :: links}"></th:block>
     <title>Games</title>
 </head>
-<body>
+
+<body class="d-flex flex-column min-vh-100">
+
     <th:block th:insert="~{fragments/navbar :: navbar}"></th:block>
 
+    <main class="container mt-4 flex-grow-1">
 
+        <div class="d-flex justify-content-between align-items-center mb-3">
 
+            <h1>Lista Games</h1>
 
+            <a class="btn btn-primary" th:href="@{/games/create}">
+                Nuovo Game
+            </a>
 
+        </div>
 
+        <table class="table table-striped table-bordered table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Titolo</th>
+                    <th>Descrizione</th>
+                    <th>Data di uscita</th>
+                    <th>Prezzo</th>
+                    <th>Sviluppatore</th>
+                    <th>Generi</th>
+                    <th>Piattaforme</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="game : ${games}">
+                    <td th:text="${game.id}"></td>
+
+                    <td th:text="${game.title}"></td>
+
+                    <td style="max-width: 300px;">
+                        <span th:if="${game.description != null}"
+                            th:text="${#strings.abbreviate(game.description, 80)}">
+                        </span>
+
+                        <span th:if="${game.description == null}">
+                            Nessuna descrizione
+                        </span>
+                    </td>
+
+                    <td th:text="${game.releaseDate}"></td>
+
+                    <td th:text="${game.price + ' €'}"></td>
+
+                    <td th:text="${game.developer.name}"></td>
+
+                    <td>
+                        <span th:each="genre, stat : ${game.genres}" th:text="${genre.name + (!stat.last ? ', ' : '')}">
+                        </span>
+                    </td>
+
+                    <td>
+                        <span th:each="platform, stat : ${game.platforms}"
+                            th:text="${platform.name + (!stat.last ? ', ' : '')}">
+                        </span>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" th:href="@{/games/{id}(id=${game.id})}">
+                            Dettagli
+                        </a>
+
+                        <a class="btn btn-warning btn-sm" th:href="@{/games/edit/{id}(id=${game.id})}">
+                            Modifica
+                        </a>
+
+                        <form th:action="@{/games/delete/{id}(id=${game.id})}" method="post" style="display:inline;">
+                            <button class="btn btn-danger btn-sm" onclick="return confirm('Eliminare questo gioco?')">
+                                Elimina
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </main>
 
     <th:block th:insert="~{fragments/footer :: footer}"></th:block>
+
 </body>
+
 </html>
