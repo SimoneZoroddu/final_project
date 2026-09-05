@@ -3,7 +3,6 @@ package org.lessons.java_final.final_project.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.lessons.java_final.final_project.model.Developer;
 import org.lessons.java_final.final_project.model.Game;
 import org.lessons.java_final.final_project.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,31 +36,10 @@ public class GameService {
     }
 
     public Game create(Game game) {
-
-        Developer developer = developerService
-                .findByNameIgnoreCase(game.getDeveloperName())
-                .orElseGet(() -> {
-                    Developer d = new Developer();
-                    d.setName(game.getDeveloperName());
-                    return developerService.create(d);
-                });
-
-        game.setDeveloper(developer);
-
         return gameRepository.save(game);
     }
 
     public Game update(Game game) {
-        Developer developer = developerService
-                .findByNameIgnoreCase(game.getDeveloperName())
-                .orElseGet(() -> {
-                    Developer d = new Developer();
-                    d.setName(game.getDeveloperName());
-                    return developerService.create(d);
-                });
-
-        game.setDeveloper(developer);
-
         return gameRepository.save(game);
     }
 

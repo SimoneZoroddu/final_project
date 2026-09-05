@@ -37,35 +37,35 @@ public class GameRestController {
     @GetMapping("{id}")
     public ResponseEntity<Game> show(@PathVariable Integer id) {
         Optional<Game> attemptGame = gameService.findById(id);
-        
+
         if (attemptGame.isEmpty()) {
             return new ResponseEntity<Game>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(attemptGame.get(), HttpStatus.OK);
-        
+
     }
-    
-    @PostMapping 
-    public ResponseEntity<Game> store(@Valid @RequestBody Game gameToSave){
-        
+
+    @PostMapping
+    public ResponseEntity<Game> store(@Valid @RequestBody Game gameToSave) {
+
         return new ResponseEntity<Game>(gameService.create(gameToSave), HttpStatus.OK);
-        
+
     }
-    
-    @PutMapping ("{id}")
-    public ResponseEntity<Game> update(@Valid @RequestBody Game gameToEdit, @PathVariable Integer id){
+
+    @PutMapping("{id}")
+    public ResponseEntity<Game> update(@Valid @RequestBody Game gameToEdit, @PathVariable Integer id) {
         Optional<Game> attemptGame = gameService.findById(id);
         if (attemptGame.isEmpty()) {
             return new ResponseEntity<Game>(HttpStatus.NOT_FOUND);
         }
-        
+
         gameToEdit.setId(id);
-        
+
         return new ResponseEntity<Game>(gameService.update(gameToEdit), HttpStatus.OK);
     }
-    
-    @DeleteMapping 
-    public ResponseEntity<Void> delete(@PathVariable Integer id){
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
         Optional<Game> attemptGame = gameService.findById(id);
 
         if (attemptGame.isEmpty()) {
@@ -74,6 +74,6 @@ public class GameRestController {
         gameService.delete(attemptGame.get());
 
         return new ResponseEntity<Void>(HttpStatus.OK);
-        
-    } 
+
+    }
 }

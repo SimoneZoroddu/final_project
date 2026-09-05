@@ -1,6 +1,5 @@
 package org.lessons.java_final.final_project.controller;
 
-import org.lessons.java_final.final_project.model.Developer;
 import org.lessons.java_final.final_project.model.Game;
 import org.lessons.java_final.final_project.service.DeveloperService;
 import org.lessons.java_final.final_project.service.GameService;
@@ -77,13 +76,10 @@ public class GameController {
         
         Game gameById = gameService.getById(id);
 
-        if (gameById.getDeveloper() != null) {
-            gameById.setDeveloperName(gameById.getDeveloper().getName());
-        }
-
         model.addAttribute("game", gameById);
         model.addAttribute("genres", genreService.findAll());
         model.addAttribute("platforms", platformService.findAll());
+        model.addAttribute("developers", developerService.findAll());
         model.addAttribute("edit", true);
         return "games/create-or-edit";
     }
@@ -95,17 +91,10 @@ public class GameController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("genres", genreService.findAll());
             model.addAttribute("platforms", platformService.findAll());
+            model.addAttribute("developers", developerService.findAll());
             model.addAttribute("edit", true);
             return "games/create-or-edit";
         }
-
-        Developer developer = developerService
-                .findByNameIgnoreCase(formGame.getDeveloperName())
-                .orElseGet(() -> {
-                    Developer d = new Developer();
-                    d.setName(formGame.getDeveloperName());
-                    return developerService.create(d);
-                });
 
         Game existingGame = gameService.getById(id);
 
@@ -115,8 +104,7 @@ public class GameController {
         existingGame.setReleaseDate(formGame.getReleaseDate());
         existingGame.setGenres(formGame.getGenres());
         existingGame.setPlatforms(formGame.getPlatforms());
-        existingGame.setDeveloper(developer);
-        existingGame.setDeveloperName(formGame.getDeveloperName());
+        existingGame.setDeveloper(formGame.getDeveloper());
 
         gameService.update(existingGame);
         return "redirect:/games";
