@@ -45,6 +45,12 @@
                                 Piattaforme
                             </a>
                         </li>
+                        <!-- Sviluppatori -->
+                        <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+                            <a class="nav-link" th:href="@{/developers}">
+                                Sviluppatori
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <div class="text-warning">
