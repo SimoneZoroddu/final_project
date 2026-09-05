@@ -114,7 +114,7 @@
 
 
 
-                        <a class="btn btn-warning" th:href="@{/games/edit/{id}(id=${game.id})}">
+                        <a class="btn btn-warning" th:href="@{/games/edit/{id}(id=${game.id})}" sec:authorize="hasAuthority('ADMIN')">
                             Modifica
                         </a>
 

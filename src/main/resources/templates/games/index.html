@@ -18,7 +18,7 @@
 
             <h1>Lista Games</h1>
 
-            <a class="btn btn-primary" th:href="@{/games/create}">
+            <a class="btn btn-primary" th:href="@{/games/create}" sec:authorize="hasAuthority('ADMIN')">
                 Nuovo Game
             </a>
 
@@ -76,11 +76,11 @@
                             Dettagli
                         </a>
 
-                        <a class="btn btn-warning btn-sm" th:href="@{/games/edit/{id}(id=${game.id})}">
+                        <a class="btn btn-warning btn-sm" th:href="@{/games/edit/{id}(id=${game.id})}" sec:authorize="hasAuthority('ADMIN')">
                             Modifica
                         </a>
 
-                        <form th:action="@{/games/delete/{id}(id=${game.id})}" method="post" style="display:inline;">
+                        <form th:action="@{/games/delete/{id}(id=${game.id})}" method="post" style="display:inline;" sec:authorize="hasAuthority('ADMIN')">
                             <button class="btn btn-danger btn-sm" onclick="return confirm('Eliminare questo gioco?')">
                                 Elimina
                             </button>

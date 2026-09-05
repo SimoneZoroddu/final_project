@@ -26,47 +26,32 @@
 
 
                 <div class="collapse navbar-collapse" id="navbarNav">
-
                     <ul class="navbar-nav">
-
-
                         <!-- Games -->
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/games}">
                                 Games
                             </a>
                         </li>
-
-
-                        
-
-
                         <!-- Generi -->
-                        <li class="nav-item">
+                        <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
                             <a class="nav-link" th:href="@{/genres}">
                                 Generi
                             </a>
                         </li>
-
-
-                        
-
-
                         <!-- Piattaforme -->
-                        <li class="nav-item">
+                        <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
                             <a class="nav-link" th:href="@{/platforms}">
                                 Piattaforme
                             </a>
                         </li>
-
-
-                        
-
-
                     </ul>
-
                 </div>
-
+                <div class="text-warning">
+                    User: <span sec:authentication="name"></span>
+                    <span class="text-danger">Roles: <span sec:authentication="principal.authorities"></span></span>
+                    <a class="btn btn-primary" href="/logout">Sign out</a>
+                </div>
             </div>
         </nav>
     </th:block>

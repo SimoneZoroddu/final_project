@@ -53,7 +53,6 @@ public class Game {
     @NotBlank(message = "Sviluppatore Obbligatorio")
     private String developerName;
 
-
     public String getDeveloperName() {
         return this.developerName;
     }

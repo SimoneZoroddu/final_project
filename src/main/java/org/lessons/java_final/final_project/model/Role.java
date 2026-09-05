@@ -1,31 +1,32 @@
 package org.lessons.java_final.final_project.model;
 
-import java.util.List;
+import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "developers")
-public class Developer {
+@Table(name = "roles")
+public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank(message = "Nome dello sviluppatore Obbligatorio")
+    @NotBlank(message = "Name cannot be blank, empyt or null")
     private String name;
 
-    @OneToMany(mappedBy = "developer")
-    @JsonIgnore 
-    private List<Game> games;
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
+    @JsonBackReference
+    private Set<User> users;
 
     public Integer getId() {
         return this.id;
@@ -43,19 +44,12 @@ public class Developer {
         this.name = name;
     }
 
-    public List<Game> getGames() {
-        return this.games;
+    public Set<User> getUsers() {
+        return this.users;
     }
 
-    public void setGames(List<Game> games) {
-        this.games = games;
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
-
-    @Override
-    public String toString() {
-        return "Developer{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
+    
 }

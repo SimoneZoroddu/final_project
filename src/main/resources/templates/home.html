@@ -51,7 +51,7 @@
                                 </a>
 
 
-                                <a class="btn btn-outline-secondary btn-lg" th:href="@{/games/create}">
+                                <a class="btn btn-outline-secondary btn-lg" th:href="@{/games/create}" sec:authorize="hasAuthority('ADMIN')">
                                     Aggiungi Game
                                 </a>
 
@@ -88,7 +88,7 @@
             <div class="row g-4">
 
 
-                <div class="col-md-4">
+                <div class="col-md-4" sec:authorize="hasAuthority('ADMIN')">
 
                     <div class="card shadow h-100 text-center">
 
@@ -118,7 +118,7 @@
 
 
 
-                <div class="col-md-4">
+                <div class="col-md-4" sec:authorize="hasAuthority('ADMIN')">
 
                     <div class="card shadow h-100 text-center">
 
@@ -148,7 +148,7 @@
 
 
 
-                <div class="col-md-4">
+                <div class="col-md-4" sec:authorize="hasAuthority('ADMIN')">
 
                     <div class="card shadow h-100 text-center">
 

@@ -47,7 +47,7 @@ public class GameController {
         return "games/show";
     }
 
-    @GetMapping("create")
+    @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("game", new Game());
         model.addAttribute("genres", genreService.findAll());
@@ -57,7 +57,7 @@ public class GameController {
         return "games/create-or-edit";
     }
 
-    @PostMapping("create")
+    @PostMapping("/create")
     public String store(@Valid @ModelAttribute("game") Game formGame, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
@@ -66,22 +66,13 @@ public class GameController {
             model.addAttribute("edit", false);
             return "games/create-or-edit";
         }
-        Developer developer = developerService
-                .findByNameIgnoreCase(formGame.getDeveloperName())
-                .orElseGet(() -> {
-                    Developer d = new Developer();
-                    d.setName(formGame.getDeveloperName());
-                    return developerService.create(d);
-                });
-
-        formGame.setDeveloper(developer);
 
         gameService.create(formGame);
 
         return "redirect:/games";
     }
 
-    @GetMapping("edit/{id}")
+    @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model) {
         
         Game gameById = gameService.getById(id);
@@ -97,7 +88,7 @@ public class GameController {
         return "games/create-or-edit";
     }
 
-    @PostMapping("edit/{id}")
+    @PostMapping("/edit/{id}")
     public String update(@PathVariable Integer id, @Valid @ModelAttribute("game") Game formGame,
             BindingResult bindingResult, Model model) {
                 System.out.println(formGame.getReleaseDate());
