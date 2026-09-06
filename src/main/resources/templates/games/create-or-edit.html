@@ -20,7 +20,6 @@
         <form th:object="${game}" th:action="${edit} ? @{/games/edit/{id}(id=${game.id})} : @{/games/create}"
             method="post">
 
-            <!-- Titolo -->
             <div class="mb-3">
                 <label class="form-label">Titolo</label>
                 <input type="text" class="form-control" th:field="*{title}">
@@ -32,7 +31,6 @@
                 </div>
             </div>
 
-            <!-- Descrizione -->
             <div class="mb-3">
                 <label class="form-label">Descrizione</label>
                 <textarea class="form-control" rows="4" th:field="*{description}"></textarea>
@@ -45,7 +43,6 @@
 
             </div>
 
-            <!-- Data uscita -->
             <div class="mb-3">
                 <label class="form-label">Data di uscita</label>
 
@@ -61,7 +58,6 @@
                 </div>
             </div>
 
-            <!-- Prezzo -->
             <div class="mb-3">
                 <label class="form-label">Prezzo</label>
                 <input type="number" step="0.01" class="form-control" th:field="*{price}">
@@ -74,7 +70,6 @@
 
             </div>
 
-            <!-- Sviluppatore -->
             <div class="mb-3">
                 <label class="form-label">Sviluppatore</label>
                 <select class="form-select" th:field="*{developer}">
@@ -90,7 +85,6 @@
                 </div>
             </div>
 
-            <!-- Generi -->
             <div class="mb-3">
                 <label class="form-label">Generi</label>
 
@@ -102,7 +96,6 @@
                 </div>
             </div>
 
-            <!-- Piattaforme -->
             <div class="mb-3">
                 <label class="form-label">Piattaforme</label>
 

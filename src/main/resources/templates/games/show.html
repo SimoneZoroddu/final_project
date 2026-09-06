@@ -25,7 +25,6 @@
             <div class="row g-0">
 
 
-                <!-- Immagine -->
                 <div class="col-md-4 p-0 d-flex align-items-center">
 
                     <img th:src="@{'https://picsum.photos/seed/' + ${game.id} + '/600/800'}"
@@ -35,7 +34,6 @@
 
 
 
-                <!-- Dettagli -->
                 <div class="col-md-8">
 
                     <div class="card-body">
@@ -114,7 +112,8 @@
 
 
 
-                        <a class="btn btn-warning" th:href="@{/games/edit/{id}(id=${game.id})}" sec:authorize="hasAuthority('ADMIN')">
+                        <a class="btn btn-warning" th:href="@{/games/edit/{id}(id=${game.id})}"
+                            sec:authorize="hasAuthority('ADMIN')">
                             Modifica
                         </a>
 

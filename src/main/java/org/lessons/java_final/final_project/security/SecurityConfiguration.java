@@ -1,6 +1,11 @@
 package org.lessons.java_final.final_project.security;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -49,16 +54,25 @@ public class SecurityConfiguration {
                 // Form del logout
                 .logout(Customizer.withDefaults())
 
-                // CSRF Cross Site Request Forgery                       Falsificazione di richieste tra siti
+                // CSRF Cross Site Request Forgery Falsificazione di richieste tra siti
                 .csrf(csrf -> csrf
-
-                        .ignoringRequestMatchers("/games/api/**")
-                        .ignoringRequestMatchers("/genres/api/**")
-                        .ignoringRequestMatchers("/platforms/api/**"))
-
-                // CORS  Cross-Origin Resourse Sharing                   Condivisione delle risorse tra origini diverse
-                .cors(cors -> cors.disable());
+                        .ignoringRequestMatchers("/games/api/**"))
+                // CORS Cross-Origin Resourse Sharing Condivisione delle risorse tra origini
+                // diverse
+                .cors(Customizer.withDefaults());
         return http.build();
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+        configuration.setAllowedMethods(List.of("GET"));
+        configuration.setAllowedHeaders(List.of("*"));
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/games/api/**", configuration);
+        return source;
     }
 
     @Bean
