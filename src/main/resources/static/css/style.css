@@ -1,0 +1,243 @@
+:root {
+    --store-bg: #101014;
+    --store-surface: #17171d;
+    --store-surface-alt: #18181c;
+    --store-hover: #2a2a31;
+    --store-border: #34343b;
+    --store-text: #f8f9fa;
+    --store-muted: #adb5bd;
+}
+
+html,
+body {
+    min-height: 100%;
+    margin: 0;
+    background-color: var(--store-bg);
+    color: var(--store-text);
+}
+
+body {
+    color-scheme: dark;
+}
+
+.site-navbar {
+    background-color: #1b1d21 !important;
+    border-bottom: 1px solid #1f1f25;
+}
+
+.site-navbar .navbar-brand,
+.site-navbar .nav-link {
+    color: var(--store-text);
+}
+
+.site-navbar .nav-link {
+    opacity: 0.72;
+}
+
+.site-navbar .nav-link:hover,
+.site-navbar .nav-link:focus {
+    color: #ffffff;
+    opacity: 1;
+}
+
+.site-user-info {
+    color: var(--store-muted);
+}
+
+.site-footer {
+    background-color: #1b1d21;
+    color: var(--store-text);
+}
+
+.card {
+    --bs-card-bg: var(--store-surface);
+    --bs-card-color: var(--store-text);
+    --bs-card-border-color: var(--store-border);
+}
+
+.table {
+    --bs-table-color: var(--store-text);
+    --bs-table-bg: var(--store-surface);
+    --bs-table-border-color: var(--store-border);
+    --bs-table-striped-bg: #1d1d23;
+    --bs-table-striped-color: var(--store-text);
+    --bs-table-hover-bg: var(--store-hover);
+    --bs-table-hover-color: #ffffff;
+}
+
+.table-dark {
+    --bs-table-color: #ffffff;
+    --bs-table-bg: #202027;
+    --bs-table-border-color: var(--store-border);
+}
+
+.form-control,
+.form-select {
+    background-color: var(--store-surface);
+    border-color: var(--store-border);
+    color: var(--store-text);
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: var(--store-surface-alt);
+    border-color: #72727f;
+    color: #ffffff;
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.08);
+}
+
+.form-control::placeholder {
+    color: #777783;
+}
+
+.form-select option {
+    background-color: var(--store-surface);
+    color: var(--store-text);
+}
+
+.btn-primary {
+    --bs-btn-color: #101014;
+    --bs-btn-bg: #f8f9fa;
+    --bs-btn-border-color: #f8f9fa;
+    --bs-btn-hover-color: #101014;
+    --bs-btn-hover-bg: #dedee3;
+    --bs-btn-hover-border-color: #dedee3;
+    --bs-btn-active-color: #101014;
+    --bs-btn-active-bg: #ccccd2;
+    --bs-btn-active-border-color: #ccccd2;
+}
+
+.btn-secondary {
+    --bs-btn-color: #ffffff;
+    --bs-btn-bg: #2a2a31;
+    --bs-btn-border-color: #2a2a31;
+    --bs-btn-hover-color: #ffffff;
+    --bs-btn-hover-bg: #393941;
+    --bs-btn-hover-border-color: #393941;
+}
+
+.btn-outline-secondary {
+    --bs-btn-color: #d7d7dc;
+    --bs-btn-border-color: #5a5a64;
+    --bs-btn-hover-color: #ffffff;
+    --bs-btn-hover-bg: #2a2a31;
+    --bs-btn-hover-border-color: #6b6b76;
+}
+
+.text-secondary,
+.text-body-secondary {
+    color: var(--store-muted) !important;
+}
+
+hr,
+.border-secondary {
+    border-color: var(--store-border) !important;
+}
+
+.home-store,
+.single-game-page {
+    background-color: var(--store-bg);
+}
+
+.store-sale-banner {
+    min-height: 270px;
+    background-image: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=85");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.store-sale-banner-content {
+    min-height: 270px;
+    background: rgba(0, 0, 0, 0.25);
+}
+
+.featured-game {
+    min-height: 520px;
+    background-color: var(--store-surface);
+}
+
+.featured-game-media {
+    min-height: 520px;
+    background:
+        linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.28) 60%, rgba(0, 0, 0, 0.1) 100%),
+        radial-gradient(circle at 70% 25%, #7a4d68 0%, #39354c 32%, #151821 72%);
+}
+
+.featured-game-content {
+    max-width: 680px;
+}
+
+.game-list {
+    max-height: 520px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.game-list::-webkit-scrollbar {
+    display: none;
+}
+
+.game-option {
+    color: inherit;
+    background: transparent;
+    transition: background-color 0.18s ease, transform 0.18s ease;
+}
+
+.game-option:hover,
+.game-option.active {
+    background-color: var(--store-hover);
+}
+
+.game-option:hover {
+    transform: translateX(-3px);
+}
+
+.game-thumb {
+    width: 58px;
+    height: 78px;
+    background: linear-gradient(145deg, #2e2e38, #5e5e70);
+    color: #ffffff;
+}
+
+.game-option-description {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.single-game-cover {
+    height: 560px;
+    background-color: var(--store-surface-alt);
+}
+
+.single-game-cover img {
+    object-fit: cover;
+}
+
+.single-game-info {
+    font-size: 0.95rem;
+}
+
+@media (max-width: 991.98px) {
+    .featured-game,
+    .featured-game-media {
+        min-height: 420px;
+    }
+
+    .game-list {
+        max-height: none;
+    }
+
+    .single-game-cover {
+        height: 420px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .single-game-cover {
+        height: 300px;
+    }
+}

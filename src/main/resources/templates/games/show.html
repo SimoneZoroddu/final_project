@@ -1,147 +1,94 @@
 <!DOCTYPE html>
-<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<html lang="it"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <th:block th:insert="~{fragments/links :: links}"></th:block>
-
     <title th:text="${game.title}"></title>
 </head>
 
-
 <body class="d-flex flex-column min-vh-100">
-
     <th:block th:insert="~{fragments/navbar :: navbar}"></th:block>
 
+    <main class="single-game-page text-light flex-grow-1">
+        <div class="container-xl py-5">
+            <a class="btn btn-outline-light btn-sm mb-4" th:href="@{/games}">
+                &larr; Torna allo Store
+            </a>
 
-    <main class="container mt-4 flex-grow-1">
-
-
-        <div class="card shadow overflow-hidden">
-
-
-            <div class="row g-0">
-
-
-                <div class="col-md-4 p-0 d-flex align-items-center">
-
-                    <img th:src="@{'https://picsum.photos/seed/' + ${game.id} + '/600/800'}"
-                        class="img-fluid rounded-start w-100" style="height: 100%; object-fit: cover;" alt="Game image">
-
-                </div>
-
-
-
-                <div class="col-md-8">
-
-                    <div class="card-body">
-
-
-                        <h1 class="card-title" th:text="${game.title}">
-                        </h1>
-
-
-                        <p class="card-text">
-
-                            <strong>Descrizione:</strong>
-
-                        </p>
-
-                        <p th:text="${game.description}">
-                        </p>
-
-
-
-                        <hr>
-
-
-
-                        <p>
-                            <strong>Data uscita:</strong>
-
-                            <span th:text="${game.releaseDate}">
-                            </span>
-                        </p>
-
-
-
-                        <p>
-                            <strong>Prezzo:</strong>
-
-                            <span th:text="${game.price + ' €'}">
-                            </span>
-                        </p>
-
-
-
-                        <p>
-                            <strong>Sviluppatore:</strong>
-
-                            <span th:text="${game.developer != null ? game.developer.name : 'Nessuno'}">
-                            </span>
-                        </p>
-
-
-
-                        <p>
-                            <strong>Generi:</strong>
-                        </p>
-
-
-                        <span th:each="genre : ${game.genres}" class="badge bg-primary me-1" th:text="${genre.name}">
-                        </span>
-
-
-
-                        <p class="mt-3">
-
-                            <strong>Piattaforme:</strong>
-
-                        </p>
-
-
-                        <span th:each="platform : ${game.platforms}" class="badge bg-success me-1"
-                            th:text="${platform.name}">
-                        </span>
-
-
-
-                        <hr>
-
-
-
-                        <a class="btn btn-warning" th:href="@{/games/edit/{id}(id=${game.id})}"
-                            sec:authorize="hasAuthority('ADMIN')">
-                            Modifica
-                        </a>
-
-
-                        <a class="btn btn-secondary" th:href="@{/games}">
-                            Torna ai Games
-                        </a>
-
-
-
+            <div class="row g-5 align-items-start">
+                <div class="col-lg-7">
+                    <div class="single-game-cover overflow-hidden rounded-4">
+                        <img th:src="@{'https://picsum.photos/seed/' + ${game.id} + '/1200/800'}"
+                            class="w-100 h-100"
+                            th:alt="${game.title}">
                     </div>
-
                 </div>
 
+                <div class="col-lg-5">
+                    <div class="py-lg-3">
+                        <h1 class="display-5 fw-bold mb-3" th:text="${game.title}"></h1>
 
+                        <p class="text-secondary fs-5 mb-4"
+                            th:text="${game.description != null && !#strings.isEmpty(game.description) ? game.description : 'Nessuna descrizione disponibile.'}">
+                        </p>
+
+                        <div class="d-flex flex-wrap gap-2 mb-4" th:if="${!#lists.isEmpty(game.genres)}">
+                            <span th:each="genre : ${game.genres}"
+                                class="badge rounded-pill text-bg-secondary px-3 py-2"
+                                th:text="${genre.name}"></span>
+                        </div>
+
+                        <h3 class="fw-semibold mb-4"
+                            th:text="${game.price != null ? #numbers.formatDecimal(game.price, 1, 2) + ' €' : 'Prezzo non disponibile'}">
+                        </h3>
+
+                        <div class="single-game-info">
+                            <div class="d-flex justify-content-between gap-3 py-3 border-bottom border-secondary">
+                                <span class="text-secondary">Sviluppatore</span>
+                                <span class="text-end"
+                                    th:text="${game.developer != null ? game.developer.name : 'Nessuno'}"></span>
+                            </div>
+
+                            <div class="d-flex justify-content-between gap-3 py-3 border-bottom border-secondary">
+                                <span class="text-secondary">Data di uscita</span>
+                                <span class="text-end"
+                                    th:text="${game.releaseDate != null ? game.releaseDate : 'Non disponibile'}"></span>
+                            </div>
+
+                            <div class="d-flex justify-content-between gap-3 py-3 border-bottom border-secondary">
+                                <span class="text-secondary">Piattaforme</span>
+                                <div class="text-end">
+                                    <span th:if="${!#lists.isEmpty(game.platforms)}">
+                                        <span th:each="platform, stat : ${game.platforms}"
+                                            th:text="${platform.name + (!stat.last ? ', ' : '')}"></span>
+                                    </span>
+                                    <span th:if="${#lists.isEmpty(game.platforms)}">Nessuna piattaforma</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="button"
+                            class="btn btn-light w-100 fw-semibold py-3 mt-4"
+                            sec:authorize="!hasAuthority('ADMIN')">
+                            Acquista ora
+                        </button>
+
+                        <a class="btn btn-light w-100 fw-semibold py-3 mt-4"
+                            th:href="@{/games/edit/{id}(id=${game.id})}"
+                            sec:authorize="hasAuthority('ADMIN')">
+                            Modifica gioco
+                        </a>
+                    </div>
+                </div>
             </div>
-
-
         </div>
-
-
     </main>
 
-
-
     <th:block th:insert="~{fragments/footer :: footer}"></th:block>
-
-
 </body>
 
 </html>

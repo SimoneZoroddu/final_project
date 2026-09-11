@@ -55,13 +55,14 @@ public class GameController {
         model.addAttribute("edit", false);
         return "games/create-or-edit";
     }
-
+    
     @PostMapping("/create")
     public String store(@Valid @ModelAttribute("game") Game formGame, BindingResult bindingResult, Model model) {
-
+        
         if (bindingResult.hasErrors()) {
             model.addAttribute("genres", genreService.findAll());
             model.addAttribute("platforms", platformService.findAll());
+            model.addAttribute("developers", developerService.findAll());
             model.addAttribute("edit", false);
             return "games/create-or-edit";
         }

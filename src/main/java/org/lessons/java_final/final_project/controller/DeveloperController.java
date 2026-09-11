@@ -1,7 +1,9 @@
 package org.lessons.java_final.final_project.controller;
 
 import org.lessons.java_final.final_project.model.Developer;
+import org.lessons.java_final.final_project.model.Game;
 import org.lessons.java_final.final_project.service.DeveloperService;
+import org.lessons.java_final.final_project.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,9 @@ public class DeveloperController {
 
     @Autowired
     private DeveloperService developerService;
+
+    @Autowired
+    private GameService gameService;
 
     @GetMapping
     public String index(Model model) {
@@ -78,7 +83,19 @@ public class DeveloperController {
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
-        developerService.delete(developerService.getById(id));
+
+        // Il Developer e' il lato @OneToMany della relazione con Game.
+        // Game contiene la chiave esterna developer_id tramite @ManyToOne.
+        // Come nell'esempio Book -> Borrowing del professore, prima eliminiamo
+        // gli elementi collegati e solo dopo il Developer.
+        Developer developerToDelete = developerService.getById(id);
+
+        for (Game gameToDelete : developerToDelete.getGames()) {
+            gameService.delete(gameToDelete);
+        }
+
+        developerService.delete(developerToDelete);
+
         return "redirect:/developers";
     }
 }

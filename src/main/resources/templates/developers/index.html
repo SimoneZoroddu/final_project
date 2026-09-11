@@ -47,7 +47,7 @@
                         <form th:action="@{/developers/delete/{id}(id=${developer.id})}"
                             method="post" style="display:inline">
                             <button class="btn btn-danger btn-sm"
-                                onclick="return confirm('Eliminare sviluppatore?')">
+                                onclick="return confirm('Eliminare sviluppatore? Verranno eliminati anche i giochi associati.')">
                                 Elimina
                             </button>
                         </form>

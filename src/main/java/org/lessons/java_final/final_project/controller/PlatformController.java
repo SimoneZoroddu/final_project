@@ -1,7 +1,9 @@
 package org.lessons.java_final.final_project.controller;
 
 import org.lessons.java_final.final_project.model.Platform;
+import org.lessons.java_final.final_project.model.Game;
 import org.lessons.java_final.final_project.service.PlatformService;
+import org.lessons.java_final.final_project.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,9 @@ public class PlatformController {
 
     @Autowired
     private PlatformService platformService;
+
+    @Autowired
+    private GameService gameService;
 
 
 
@@ -102,9 +107,17 @@ public class PlatformController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id){
 
-        platformService.delete(
-            platformService.getById(id)
-        );
+        // Platform e' il lato inverso (mappedBy) della @ManyToMany.
+        // La tabella game_platform viene gestita dal lato proprietario Game.platforms.
+        // Prima togliamo la Platform da tutti i Game collegati e poi la eliminiamo.
+        Platform platformToDelete = platformService.getById(id);
+
+        for (Game linkedGame : platformToDelete.getGames()) {
+            linkedGame.getPlatforms().remove(platformToDelete);
+            gameService.update(linkedGame);
+        }
+
+        platformService.delete(platformToDelete);
 
         return "redirect:/platforms";
     }

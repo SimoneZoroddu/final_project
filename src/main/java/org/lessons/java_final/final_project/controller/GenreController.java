@@ -1,7 +1,9 @@
 package org.lessons.java_final.final_project.controller;
 
 import org.lessons.java_final.final_project.model.Genre;
+import org.lessons.java_final.final_project.model.Game;
 import org.lessons.java_final.final_project.service.GenreService;
+import org.lessons.java_final.final_project.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,9 @@ public class GenreController {
 
     @Autowired
     private GenreService genreService;
+
+    @Autowired
+    private GameService gameService;
 
 
     @GetMapping
@@ -89,9 +94,18 @@ public class GenreController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
 
-        genreService.delete(
-            genreService.getById(id)
-        );
+        // Genre e' il lato inverso (mappedBy) della @ManyToMany.
+        // La tabella game_genre viene gestita dal lato proprietario Game.genres.
+        // Quindi, come nell'esempio Category del professore, prima togliamo
+        // il Genre da tutti i Game collegati e poi eliminiamo il Genre.
+        Genre genreToDelete = genreService.getById(id);
+
+        for (Game linkedGame : genreToDelete.getGames()) {
+            linkedGame.getGenres().remove(genreToDelete);
+            gameService.update(linkedGame);
+        }
+
+        genreService.delete(genreToDelete);
 
         return "redirect:/genres";
     }
