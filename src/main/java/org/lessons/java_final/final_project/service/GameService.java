@@ -1,6 +1,7 @@
 package org.lessons.java_final.final_project.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.lessons.java_final.final_project.model.Game;
@@ -28,11 +29,13 @@ public class GameService {
 
     public Game getById(Integer id) {
 
-        if (findById(id).isEmpty()) {
-            throw new RuntimeException("Game non trovato con id: " + id);
+        Optional<Game> attemOptional = findById(id);
+
+        if (attemOptional.isEmpty()) {
+            throw new NoSuchElementException("Game non trovato con id: " + id);
         }
 
-        return findById(id).get();
+        return attemOptional.get();
     }
 
     public Game create(Game game) {

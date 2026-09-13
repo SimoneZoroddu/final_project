@@ -1,6 +1,7 @@
 package org.lessons.java_final.final_project.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.lessons.java_final.final_project.model.Genre;
@@ -22,7 +23,7 @@ public class GenreService {
         Optional<Genre> singleGenre = genreRepository.findById(id);
 
         if (singleGenre.isEmpty()) {
-            throw new RuntimeException("Genere non trovato con id: " + id);
+            throw new NoSuchElementException("Genere non trovato con id: " + id);
         }
 
         return singleGenre.get();

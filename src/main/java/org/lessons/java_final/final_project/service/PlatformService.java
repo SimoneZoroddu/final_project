@@ -1,6 +1,7 @@
 package org.lessons.java_final.final_project.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.lessons.java_final.final_project.model.Platform;
@@ -22,7 +23,7 @@ public class PlatformService {
         Optional<Platform> singlePlatform = platformRepository.findById(id);
 
         if (singlePlatform.isEmpty()) {
-            throw new RuntimeException("Piattaforma non trovato con id: " + id);
+            throw new NoSuchElementException("Piattaforma non trovato con id: " + id);
         }
 
         return singlePlatform.get();

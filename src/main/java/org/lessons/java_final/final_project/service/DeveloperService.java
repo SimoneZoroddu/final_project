@@ -1,6 +1,7 @@
 package org.lessons.java_final.final_project.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.lessons.java_final.final_project.model.Developer;
@@ -22,14 +23,10 @@ public class DeveloperService {
         Optional<Developer> singleDeveloper = developerRepository.findById(id);
 
         if (singleDeveloper.isEmpty()) {
-            throw new RuntimeException("Sviluppatore non trovato con id: " + id);
+            throw new NoSuchElementException("Sviluppatore non trovato con id: " + id);
         }
 
         return singleDeveloper.get();
-    }
-
-    public Optional<Developer> findByNameIgnoreCase(String name) {
-        return developerRepository.findByNameIgnoreCase(name);
     }
 
     public Developer create(Developer developer) {
