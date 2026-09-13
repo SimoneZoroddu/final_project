@@ -1,9 +1,7 @@
 package org.lessons.java_final.final_project.controller;
 
 import org.lessons.java_final.final_project.model.Platform;
-import org.lessons.java_final.final_project.model.Game;
 import org.lessons.java_final.final_project.service.PlatformService;
-import org.lessons.java_final.final_project.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,21 +10,15 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 
-
 @Controller
 @RequestMapping("/platforms")
 public class PlatformController {
 
-
     @Autowired
     private PlatformService platformService;
 
-    @Autowired
-    private GameService gameService;
-
-
     @GetMapping
-    public String index(Model model){
+    public String index(Model model) {
 
         model.addAttribute("platforms", platformService.findAll());
 
@@ -34,7 +26,7 @@ public class PlatformController {
     }
 
     @GetMapping("/create")
-    public String create(Model model){
+    public String create(Model model) {
 
         model.addAttribute("platform", new Platform());
         model.addAttribute("edit", false);
@@ -46,9 +38,9 @@ public class PlatformController {
     public String store(
             @Valid @ModelAttribute("platform") Platform platform,
             BindingResult bindingResult,
-            Model model){
+            Model model) {
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             model.addAttribute("edit", false);
             return "platforms/create-or-edit";
         }
@@ -61,7 +53,7 @@ public class PlatformController {
     @GetMapping("/edit/{id}")
     public String edit(
             @PathVariable Integer id,
-            Model model){
+            Model model) {
 
         model.addAttribute("platform", platformService.getById(id));
         model.addAttribute("edit", true);
@@ -73,13 +65,12 @@ public class PlatformController {
     public String update(
             @Valid @ModelAttribute("platform") Platform platform,
             BindingResult bindingResult,
-            Model model){
+            Model model) {
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             model.addAttribute("edit", true);
             return "platforms/create-or-edit";
         }
-
 
         platformService.update(platform);
 
@@ -87,16 +78,9 @@ public class PlatformController {
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable Integer id){
+    public String delete(@PathVariable Integer id) {
 
-        Platform platformToDelete = platformService.getById(id);
-
-        for (Game linkedGame : platformToDelete.getGames()) {
-            linkedGame.getPlatforms().remove(platformToDelete);
-            gameService.update(linkedGame);
-        }
-
-        platformService.delete(platformToDelete);
+        platformService.delete(id);
 
         return "redirect:/platforms";
     }

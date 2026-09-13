@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import org.lessons.java_final.final_project.model.Game;
 import org.lessons.java_final.final_project.model.Genre;
 import org.lessons.java_final.final_project.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ public class GenreService {
     @Autowired
     private GenreRepository genreRepository;
 
+    @Autowired
+    private GameService gameService;
+    
     public List<Genre> findAll() {
         return genreRepository.findAll();
     }
@@ -37,7 +41,17 @@ public class GenreService {
         return genreRepository.save(genre);
     }
 
-    public void delete(Genre genre) {
-        genreRepository.delete(genre);
+    public void delete(Integer id) {
+
+    Genre genreToDelete = getById(id);
+
+    List<Game> linkedGames = genreToDelete.getGames();
+
+    for (Game linkedGame : linkedGames) {
+        linkedGame.getGenres().remove(genreToDelete);
+        gameService.update(linkedGame);
     }
+
+    genreRepository.delete(genreToDelete);
+}
 }

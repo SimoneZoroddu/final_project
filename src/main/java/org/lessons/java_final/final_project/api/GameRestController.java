@@ -71,7 +71,8 @@ public class GameRestController {
         if (attemptGame.isEmpty()) {
             return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }
-        gameService.delete(attemptGame.get());
+        
+        gameService.delete(id);
 
         return new ResponseEntity<Void>(HttpStatus.OK);
 

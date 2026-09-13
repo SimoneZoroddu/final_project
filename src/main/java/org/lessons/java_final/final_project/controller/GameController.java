@@ -55,10 +55,10 @@ public class GameController {
         model.addAttribute("edit", false);
         return "games/create-or-edit";
     }
-    
+
     @PostMapping("/create")
     public String store(@Valid @ModelAttribute("game") Game formGame, BindingResult bindingResult, Model model) {
-        
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("genres", genreService.findAll());
             model.addAttribute("platforms", platformService.findAll());
@@ -74,7 +74,7 @@ public class GameController {
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model) {
-        
+
         Game gameById = gameService.getById(id);
 
         model.addAttribute("game", gameById);
@@ -88,32 +88,29 @@ public class GameController {
     @PostMapping("/edit/{id}")
     public String update(@PathVariable Integer id, @Valid @ModelAttribute("game") Game formGame,
             BindingResult bindingResult, Model model) {
-                System.out.println(formGame.getReleaseDate());
+
         if (bindingResult.hasErrors()) {
+
+            formGame.setId(id);
+
             model.addAttribute("genres", genreService.findAll());
             model.addAttribute("platforms", platformService.findAll());
             model.addAttribute("developers", developerService.findAll());
             model.addAttribute("edit", true);
+
             return "games/create-or-edit";
         }
 
-        Game existingGame = gameService.getById(id);
+        formGame.setId(id);
 
-        existingGame.setTitle(formGame.getTitle());
-        existingGame.setDescription(formGame.getDescription());
-        existingGame.setPrice(formGame.getPrice());
-        existingGame.setReleaseDate(formGame.getReleaseDate());
-        existingGame.setGenres(formGame.getGenres());
-        existingGame.setPlatforms(formGame.getPlatforms());
-        existingGame.setDeveloper(formGame.getDeveloper());
+        gameService.update(formGame);
 
-        gameService.update(existingGame);
         return "redirect:/games";
     }
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
-        gameService.delete(gameService.getById(id));
+        gameService.delete(id);
         return "redirect:/games";
     }
 

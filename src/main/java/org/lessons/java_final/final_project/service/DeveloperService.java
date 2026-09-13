@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.lessons.java_final.final_project.model.Developer;
+import org.lessons.java_final.final_project.model.Game;
 import org.lessons.java_final.final_project.repository.DeveloperRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,9 @@ public class DeveloperService {
 
     @Autowired
     private DeveloperRepository developerRepository;
+
+    @Autowired
+    private GameService gameService;
 
     public List<Developer> findAll() {
         return developerRepository.findAll();
@@ -37,7 +41,14 @@ public class DeveloperService {
         return developerRepository.save(developer);
     }
 
-    public void delete(Developer developer) {
-        developerRepository.delete(developer);
+    public void delete(Integer id) {
+
+        Developer developerToDelete = getById(id);
+
+        for (Game gameToDelete : developerToDelete.getGames()) {
+            gameService.delete(gameToDelete.getId());
+        }
+
+        developerRepository.delete(developerToDelete);
     }
 }

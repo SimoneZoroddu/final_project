@@ -55,11 +55,12 @@ public class SecurityConfiguration {
                 .logout(Customizer.withDefaults())
 
                 // CSRF Cross Site Request Forgery Falsificazione di richieste tra siti
-                .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/games/api/**"))
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/games/api/**"))
+
                 // CORS Cross-Origin Resourse Sharing Condivisione delle risorse tra origini
                 // diverse
                 .cors(Customizer.withDefaults());
+                
         return http.build();
     }
 
@@ -83,8 +84,8 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    DatabaseUserDetailService userDetailService() {
-        return new DatabaseUserDetailService();
+    DatabaseUserDetailsService userDetailService() {
+        return new DatabaseUserDetailsService();
     }
 
     @Bean

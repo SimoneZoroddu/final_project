@@ -15,9 +15,6 @@ public class GameService {
     @Autowired
     private GameRepository gameRepository;
 
-    @Autowired
-    private DeveloperService developerService;
-
     public List<Game> findAll() {
         return gameRepository.findAll();
     }
@@ -46,8 +43,9 @@ public class GameService {
         return gameRepository.save(game);
     }
 
-    public void delete(Game game) {
-        gameRepository.delete(game);
+    public void delete(Integer id) {
+        Game gameToDelete = getById(id);
+        gameRepository.delete(gameToDelete);
     }
 
 }

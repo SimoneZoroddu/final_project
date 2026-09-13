@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import org.lessons.java_final.final_project.model.Game;
 import org.lessons.java_final.final_project.model.Platform;
 import org.lessons.java_final.final_project.repository.PlatformRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ public class PlatformService {
 
     @Autowired
     private PlatformRepository platformRepository;
+
+    @Autowired
+    private GameService gameService;
 
     public List<Platform> findAll() {
         return platformRepository.findAll();
@@ -37,7 +41,17 @@ public class PlatformService {
         return platformRepository.save(platform);
     }
 
-    public void delete(Platform platform) {
-        platformRepository.delete(platform);
+    public void delete(Integer id) {
+
+        Platform platformToDelete = getById(id);
+
+        List<Game> linkedGames = platformToDelete.getGames();
+
+        for (Game linkedGame : linkedGames) {
+            linkedGame.getPlatforms().remove(platformToDelete);
+            gameService.update(linkedGame);
+        }
+
+        platformRepository.delete(platformToDelete);
     }
 }

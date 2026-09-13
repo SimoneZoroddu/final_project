@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class DatabaseUserDetails implements UserDetails {
+
     private final Integer id;
     private final String username;
     private final String password;
@@ -21,8 +22,8 @@ public class DatabaseUserDetails implements UserDetails {
         this.password = user.getPassword();
         this.authorities = new HashSet<GrantedAuthority>();
 
-        for (Role roles : user.getRoles()) {
-            authorities.add(new SimpleGrantedAuthority(roles.getName()));
+        for (Role role : user.getRoles()) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
         }
     }
     
