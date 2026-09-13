@@ -29,7 +29,6 @@ public class GenreController {
         return "genres/index";
     }
 
-
     @GetMapping("/create")
     public String create(Model model) {
 
@@ -39,31 +38,26 @@ public class GenreController {
         return "genres/create-or-edit";
     }
 
-
     @PostMapping("/create")
     public String store(
             @Valid @ModelAttribute("genre") Genre genre,
             BindingResult bindingResult,
             Model model) {
 
-
         if (bindingResult.hasErrors()) {
             model.addAttribute("edit", false);
             return "genres/create-or-edit";
         }
-
 
         genreService.create(genre);
 
         return "redirect:/genres";
     }
 
-
     @GetMapping("/edit/{id}")
     public String edit(
             @PathVariable Integer id,
             Model model) {
-
 
         model.addAttribute("genre", genreService.getById(id));
         model.addAttribute("edit", true);
@@ -71,25 +65,21 @@ public class GenreController {
         return "genres/create-or-edit";
     }
 
-
     @PostMapping("/edit/{id}")
     public String update(
             @Valid @ModelAttribute("genre") Genre genre,
             BindingResult bindingResult,
             Model model) {
 
-
         if (bindingResult.hasErrors()) {
             model.addAttribute("edit", true);
             return "genres/create-or-edit";
         }
 
-
         genreService.update(genre);
 
         return "redirect:/genres";
     }
-
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {

@@ -34,7 +34,7 @@ public class Game {
 
     private LocalDate releaseDate;
 
-    @DecimalMin(value = "0.00")
+    @DecimalMin(value = "0.00", message = "Il prezzo non può essere negativo")
     private BigDecimal price;
 
     @ManyToMany
@@ -46,7 +46,7 @@ public class Game {
     private List<Platform> platforms;
 
     @ManyToOne
-    @JoinColumn(name = "developer_id")
+    @JoinColumn(name = "developer_id", nullable = false)
     @NotNull(message = "Sviluppatore Obbligatorio")
     private Developer developer;
 

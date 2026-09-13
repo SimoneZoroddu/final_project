@@ -41,7 +41,7 @@ public class GameRestController {
         if (attemptGame.isEmpty()) {
             return new ResponseEntity<Game>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(attemptGame.get(), HttpStatus.OK);
+        return new ResponseEntity<Game>(attemptGame.get(), HttpStatus.OK);
 
     }
 

@@ -25,7 +25,6 @@ public class PlatformController {
     private GameService gameService;
 
 
-
     @GetMapping
     public String index(Model model){
 
@@ -33,8 +32,6 @@ public class PlatformController {
 
         return "platforms/index";
     }
-
-
 
     @GetMapping("/create")
     public String create(Model model){
@@ -45,34 +42,26 @@ public class PlatformController {
         return "platforms/create-or-edit";
     }
 
-
-
     @PostMapping("/create")
     public String store(
             @Valid @ModelAttribute("platform") Platform platform,
             BindingResult bindingResult,
             Model model){
 
-
         if(bindingResult.hasErrors()){
             model.addAttribute("edit", false);
             return "platforms/create-or-edit";
         }
-
 
         platformService.create(platform);
 
         return "redirect:/platforms";
     }
 
-
-
-
     @GetMapping("/edit/{id}")
     public String edit(
             @PathVariable Integer id,
             Model model){
-
 
         model.addAttribute("platform", platformService.getById(id));
         model.addAttribute("edit", true);
@@ -80,15 +69,11 @@ public class PlatformController {
         return "platforms/create-or-edit";
     }
 
-
-
-
     @PostMapping("/edit/{id}")
     public String update(
             @Valid @ModelAttribute("platform") Platform platform,
             BindingResult bindingResult,
             Model model){
-
 
         if(bindingResult.hasErrors()){
             model.addAttribute("edit", true);
@@ -100,9 +85,6 @@ public class PlatformController {
 
         return "redirect:/platforms";
     }
-
-
-
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id){
