@@ -107,9 +107,6 @@ public class PlatformController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id){
 
-        // Platform e' il lato inverso (mappedBy) della @ManyToMany.
-        // La tabella game_platform viene gestita dal lato proprietario Game.platforms.
-        // Prima togliamo la Platform da tutti i Game collegati e poi la eliminiamo.
         Platform platformToDelete = platformService.getById(id);
 
         for (Game linkedGame : platformToDelete.getGames()) {

@@ -11,7 +11,6 @@
 <body class="d-flex flex-column min-vh-100">
     <th:block th:insert="~{fragments/navbar :: navbar}"></th:block>
 
-    <!-- Vista USER: stile Store come Home.jsx -->
     <main class="home-store flex-grow-1 text-light py-4 py-lg-5" sec:authorize="!hasAuthority('ADMIN')">
         <div class="container-xl">
             <div class="mb-4">
@@ -103,7 +102,6 @@
         </div>
     </main>
 
-    <!-- Vista ADMIN: mantiene la tabella di backoffice -->
     <main class="container-xl py-4 flex-grow-1" sec:authorize="hasAuthority('ADMIN')">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h1 class="mb-0">Lista Games</h1>

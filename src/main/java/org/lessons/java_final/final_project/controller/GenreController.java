@@ -94,10 +94,6 @@ public class GenreController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
 
-        // Genre e' il lato inverso (mappedBy) della @ManyToMany.
-        // La tabella game_genre viene gestita dal lato proprietario Game.genres.
-        // Quindi, come nell'esempio Category del professore, prima togliamo
-        // il Genre da tutti i Game collegati e poi eliminiamo il Genre.
         Genre genreToDelete = genreService.getById(id);
 
         for (Game linkedGame : genreToDelete.getGames()) {

@@ -84,10 +84,6 @@ public class DeveloperController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
 
-        // Il Developer e' il lato @OneToMany della relazione con Game.
-        // Game contiene la chiave esterna developer_id tramite @ManyToOne.
-        // Come nell'esempio Book -> Borrowing del professore, prima eliminiamo
-        // gli elementi collegati e solo dopo il Developer.
         Developer developerToDelete = developerService.getById(id);
 
         for (Game gameToDelete : developerToDelete.getGames()) {
